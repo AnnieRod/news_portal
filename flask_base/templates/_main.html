@@ -1,0 +1,104 @@
+<main id="main">
+
+    <!-- ======= Hero Slider Section ======= -->
+    <section id="hero-slider" class="hero-slider">
+        <div class="container-md" data-aos="fade-in">
+            <div class="row">
+                <div class="col-12">
+                    <div class="swiper sliderFeaturedPosts">
+                        <div class="swiper-wrapper">
+                            {%for news in last %}
+                            <div class="swiper-slide">
+                                <a href="/news/{{news.id}}" class="img-bg d-flex align-items-end"
+                                    style="background-image: url('/uploads/{{ news.image }}');">
+                                    <div class="img-bg-inner">
+                                        <h2>{{ news.title | title}}</h2>
+                                        <p><span> {{ news.resume }} </span></p>
+                                    </div>
+                                </a>
+                            </div>
+                            {%endfor%}
+                        </div>
+                        <div class="custom-swiper-button-next">
+                            <span class="bi-chevron-right"></span>
+                        </div>
+                        <div class="custom-swiper-button-prev">
+                            <span class="bi-chevron-left"></span>
+                        </div>
+                        <div class="swiper-pagination"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section><!-- End Hero Slider Section -->
+
+    <!-- ======= Post Grid Section ======= -->
+    <section id="posts" class="posts">
+        <div class="container" data-aos="fade-up">
+            <div class="row g-5">
+                <div class="col-lg-4">
+                    <div class="post-entry-1 lg">
+                        {%for news in last[0:1] | reverse %}
+                        <a href="/news/{{news.id}}"><img src='/uploads/{{ news.image }}' alt=""
+                                class="img-fluid"></a>  
+                        <div class="post-meta"><span class="date">{{news.category}}</span> <span class="mx-1">&bullet;</span>
+                            <span>{{news.created_at}}</span></div>
+                        <h2><a href="/news/{{news.id}}">{{news.title}}</a></h2>
+                        <p class="mb-4 d-block">{{news.content}}</p>
+                        {%endfor%}
+                        <div class="d-flex align-items-center author">
+                            <div class="photo"><img src="#" alt="" class="img-fluid"></div>
+                            <div class="name">
+                                <h3 class="m-0 p-0"></h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>         
+                <div class="col-lg-8">
+                    <div class="row g-5">
+                        <div class="col-lg-4 border-start custom-border">
+                            {%for news in all_news[0:3] %}
+                            <div class="post-entry-1">
+                                <a href="/news/{{news.id}}"><img src='/uploads/{{ news.image }}' alt=""
+                                        class="img-fluid"></a>
+                                <div class="post-meta"><span class="date">{{news.category}}</span> <span
+                                        class="mx-1">&bullet;</span> <span>{{news.created_at}}</span></div>
+                                <h2><a href="/news/{{news.id}}">{{ news.resume }}</a></h2>
+                            </div>
+                            {%endfor%}
+                        </div>
+                        <div class="col-lg-4 border-start custom-border">
+                            {%for news in all_news [4:7] %}
+                            <div class="post-entry-1">
+                                <a href="/news/{{news.id}}"><img src='/uploads/{{ news.image }}' alt=""
+                                        class="img-fluid"></a>
+                                <div class="post-meta"><span class="date">{{news.category}}</span> <span
+                                        class="mx-1">&bullet;</span> <span>{{news.created_at}}</span></div>
+                                <h2><a href="/news/{{news.id}}">{{ news.resume }}</a></h2>
+                            </div>
+                            {%endfor%}
+                        </div>
+                        <!-- Trending Section -->
+                        <div class="col-lg-4">
+                            <div class="trending">
+                                <h3>Trending</h3>
+                                <ul class="trending-post">
+                                    {%for news in  journalist.news[0:7] %}
+                                    <li>
+                                        <a href="/news/{{news.id}}">
+                                            <span class="number">1</span>
+                                            <h3>{{ news.title | title }}</h3>
+                                            <span class="author">{{news.first_name}} {{news.last_name}}</span>
+                                        </a>
+                                    </li>
+                                    {%endfor%}
+                                </ul>
+                            </div>
+                        </div> <!-- End Trending Section -->
+                    </div>
+                </div>
+            </div> <!-- End .row -->
+        </div>
+    </section> <!-- End Post Grid Section -->
+
+</main><!-- End #main -->

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block titulo %}Portal{% endblock %}
+{% block contenido %}
+
+{% include '_menu.html' %}
+
+{% if 'journalist_id' not in session %}
+{% include '_main2.html' %}
+{% else %}
+{% include '_main.html' %}
+{% endif %}
+{% include '_footer.html' %}
+
+
+{% endblock %}

@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+{% block titulo %}Perfil de periodista{% endblock %}
+{% block contenido %}
+
+<header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+
+        <a href="index.html" class="logo d-flex align-items-center">
+            <!-- Uncomment the line below if you also wish to use an image logo -->
+            <!-- <img src="static/img/logo.png" alt=""> -->
+            <img src="/static/img/apple-touch-icon.png" alt="Logo">
+            <h1>Portal - {{sistema}}</h1>
+        </a>
+
+        <nav id="navbar" class="navbar">
+            <ul>
+                <li><a href="/">Inicio</a></li>
+                <li class="dropdown"><a href="#"><span>Categorias</span> <i
+                            class="bi bi-chevron-down dropdown-indicator"></i></a>
+                    <ul>
+                        {% for category in all_categories %}
+                            <li><a href="/news/category/{{ category.id }}">{{ category.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
+
+                <li><a href="/about">Sobre</a></li>
+                <li><a href="/contact">Contacto</a></li>
+            </ul>
+            <ul>
+                <li class="dropdown"><a href="#"><span>Login/Registro</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
+                    <ul>
+                        <li class="dropdown"><a href="/reader/register">Lector</a></li>
+                        <li class="dropdown"><a href="/journalist/register">Periodista</a></li>
+                        <li class="dropdown"><a href="/profile">Perfil </a></li>
+                    </ul>
+                </li>
+
+            </ul>
+        </nav><!-- .navbar -->
+
+        <div class="position-relative">
+            <a href="#" class="mx-2"><span class="bi-facebook"></span></a>
+            <a href="#" class="mx-2"><span class="bi-twitter"></span></a>
+            <a href="#" class="mx-2"><span class="bi-instagram"></span></a>
+
+            <a href="#" class="mx-2 js-search-open"><span class="bi-search"></span></a>
+            <i class="bi bi-list mobile-nav-toggle"></i>
+
+            <!-- ======= Search Form ======= -->
+            <div class="search-form-wrap js-search-form-wrap">
+                <form action="search-result.html" class="search-form">
+                    <span class="icon bi-search"></span>
+                    <input type="text" placeholder="Search" class="form-control">
+                    <button class="btn js-search-close"><span class="bi-x"></span></button>
+                </form>
+            </div><!-- End Search Form -->
+
+        </div>
+
+    </div>
+
+</header><!-- End Header -->
+
+<section class="vh-100" style="background-color: #f4f5f7;">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="w-100">
+                <div class="card mb-3" style="border-radius: .5rem;">
+                    <div class="row g-0">
+                        <div class="col-md-4 gradient-custom text-center text-dark"
+                            style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
+                            <img src="https://cdn-icons-png.flaticon.com/512/681/681876.png" alt="Avatar"
+                                class="img-fluid my-5" style="width: 80px;" />
+                            <h5>{{ journalist.first_name }} {{ journalist.last_name }}</h5>
+                            <p>Periodista</p>
+                            <a href="/news/create" class="btn btn-dark">Publicar noticia</a>
+                            <a href="/logout" class="btn btn-danger">Cerrar sesion</a>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body p-4">
+                                <h6>Información de periodista</h6>
+                                <hr class="mt-0 mb-4">
+                                <div class="row pt-1">
+                                    <div class="col-6 mb-3">
+                                        <h6>Correo</h6>
+                                        <p class="text-muted">{{ journalist.email }}</p>
+                                    </div>
+                                    <div class="col-6 mb-3">
+                                        <h6>Credencial</h6>
+                                        <p class="text-muted">{{ journalist.credential }}</p>
+                                    </div>
+                                </div>
+                                <h6>Contribuciones</h6>
+                                <hr class="mt-0 mb-4">
+                                <div class="row pt-1">
+                                    <div class="col-6 mb-3">
+                                        <h6>Ultima noticia</h6>
+                                        <a href="/news/{{ last.id }}">{{ last.title }}</a>
+                                    </div>
+                                    <div class="col-6 mb-3">
+                                        <h6>Noticias publicadas</h6>
+                                        <p class="text-muted">{{ news.0.total }}</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-start">
+                                    <a href="#!"><i class="fab fa-facebook-f fa-lg me-3"></i></a>
+                                    <a href="#!"><i class="fab fa-twitter fa-lg me-3"></i></a>
+                                    <a href="#!"><i class="fab fa-instagram fa-lg"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section>
+    <div class="container">
+        <h1 class="display-5 mb-5 text-center">Noticias publicadas por {{ journalist.first_name }} </h1>
+        {% for news in all_news %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <a class="card-title" href="/news/{{ news.id }}"><strong>{{ news.title }}</strong></a>
+                <p class="card-text">{{ news.resume }}</p>
+                <p class="card-text"><small class="text-muted"> Publicado el {{ news.updated_at }}</small></p>
+            </div>
+            <div class="mt-15 col-md-10 col-lg-4">
+                <img src="/uploads/{{ news.image }}" width="500" class=" rounded float-start" alt="Imagen de noticia">
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+{% include '_footer.html' %}
+
+
+{% endblock %}

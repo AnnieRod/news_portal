@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block titulo %}Portal{% endblock %}
+{% block contenido %}
+
+{% include '_menu.html' %}
+
+<main id="main">
+        <div class="container mt-5">
+            <div class="section-title mt-5">
+                <h2 class="mt-5"> {{ categories.name }}</h2>
+                <p class="paragraph">Conoce todo lo que está pasando hoy en {{ categories.name }}</p>
+            </div>
+            <section>
+            {% for news in all_news %}
+            <div class="card mb-3">
+                <div class="mt-15 col-md-10 col-lg-4">
+                    <img src="/uploads/{{ news.image }}" width="500" class=" rounded float-start" alt="Imagen de noticia">
+                </div>
+                <div class="card-body">
+                    <a class="card-title" href="/news/{{ news.id }}"><strong>{{ news.title }}</strong></a>
+                    <p class="card-text">{{ news.resume }}</p>
+                    <p class="card-text"><small class="text-muted"> Publicado el {{ news.updated_at }}</small></p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+</main>
+
+{% include '_footer.html' %}
+
+
+{% endblock %}

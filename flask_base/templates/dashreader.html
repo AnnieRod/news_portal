@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+{% block titulo %}Perfil de Lector{% endblock %}
+{% block contenido %}
+
+<header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+
+        <a href="index.html" class="logo d-flex align-items-center">
+            <!-- Uncomment the line below if you also wish to use an image logo -->
+            <!-- <img src="static/img/logo.png" alt=""> -->
+            <img src="/static/img/apple-touch-icon.png" alt="Logo">
+            <h1>Portal - {{sistema}}</h1>
+        </a>
+
+        <nav id="navbar" class="navbar">
+            <ul>
+                <li><a href="/">Inicio</a></li>
+                <li class="dropdown"><a href="#"><span>Categorias</span> <i
+                            class="bi bi-chevron-down dropdown-indicator"></i></a>
+                    <ul>
+                        {% for category in all_categories %}
+                            <li><a href="/news/category/{{ category.id }}">{{ category.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
+
+                <li><a href="/about">Sobre</a></li>
+                <li><a href="/contact">Contacto</a></li>
+            </ul>
+            <ul>
+                <li class="dropdown"><a href="#"><span>Login/Registro</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
+                    <ul>
+                        <li class="dropdown"><a href="/reader/register">Lector</a></li>
+                        <li class="dropdown"><a href="/journalist/register">Periodista</a></li>
+                        <li class="dropdown"><a href="/profile">Perfil </a></li>
+                    </ul>
+                </li>
+
+            </ul>
+        </nav><!-- .navbar -->
+
+        <div class="position-relative">
+            <a href="#" class="mx-2"><span class="bi-facebook"></span></a>
+            <a href="#" class="mx-2"><span class="bi-twitter"></span></a>
+            <a href="#" class="mx-2"><span class="bi-instagram"></span></a>
+
+            <a href="#" class="mx-2 js-search-open"><span class="bi-search"></span></a>
+            <i class="bi bi-list mobile-nav-toggle"></i>
+
+            <!-- ======= Search Form ======= -->
+            <div class="search-form-wrap js-search-form-wrap">
+                <form action="search-result.html" class="search-form">
+                    <span class="icon bi-search"></span>
+                    <input type="text" placeholder="Search" class="form-control">
+                    <button class="btn js-search-close"><span class="bi-x"></span></button>
+                </form>
+            </div><!-- End Search Form -->
+
+        </div>
+
+    </div>
+
+</header><!-- End Header -->
+    <section class="vh-100" style="background-color: #f4f5f7;">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="w-100">
+                    <div class="card mb-3" style="border-radius: .5rem;">
+                        <div class="row g-0">
+                            <div class="col-md-4 gradient-custom text-center text-dark"
+                                style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
+                                <img src="https://static.thenounproject.com/png/938135-200.png" alt="Avatar"
+                                    class="img-fluid my-5" style="width: 80px;" />
+                                <h5>{{ reader.first_name }} {{ reader.last_name }}</h5>
+                                <p>Lector suscriptor</p>
+                                <a href="/reader/renovate" class="btn btn-dark">Pagar suscripción</a>
+                                <a href="/logout" class="btn btn-danger">Cerrar sesion</a>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body p-4">
+                                    <h6>Información de lector</h6>
+                                    <hr class="mt-0 mb-4">
+                                    <div class="row pt-1">
+                                        <div class="col-6 mb-3">
+                                            <h6>Correo</h6>
+                                            <p class="text-muted">{{ reader.email }}</p>
+                                        </div>
+                                        <div class="col-6 mb-3">
+                                            <h6>Suscripción #</h6>
+                                            <p class="text-muted">{{ reader.subscription }}</p>
+                                        </div>
+                                    </div>
+                                    <h6>Contribuciones</h6>
+                                    <hr class="mt-0 mb-4">
+                                    <div class="row pt-1">
+                                        <div class="col-6 mb-3">
+                                            <h6>Lector desde ...</h6>
+                                            <p class="text-muted">{{ reader.created_at }}</p>
+                                        </div>
+                                        <div class="col-6 mb-3">
+                                            <h6>Comentarios publicados</h6>
+                                            <p class="text-muted">Contador de comentarios</p>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-start">
+                                        <a href="#!"><i class="fab fa-facebook-f fa-lg me-3"></i></a>
+                                        <a href="#!"><i class="fab fa-twitter fa-lg me-3"></i></a>
+                                        <a href="#!"><i class="fab fa-instagram fa-lg"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section>
+        <div class="container">
+            <h1 class="display-5 mb-5 text-center">Comentarios hechos por {{ reader.first_name }}</h1>
+            <div class="container my-5 py-5">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-md-12 col-lg-10">
+                        <div class="card text-dark">
+                            <div class="card-body p-4">
+
+                                <div class="d-flex flex-start">
+                                    <img class="rounded-circle shadow-1-strong me-3"
+                                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvDx0IVQPwxNVZ48ZyoMQ_IGFDBsaIhRdy6w&usqp=CAU" alt="avatar"
+                                        width="60" height="60" />
+                                    <div>
+                                        <h6 class="fw-bold mb-1">Titulo noticia donde esta comentario (link que redirija allá)</h6>
+                                        <div class="d-flex align-items-center mb-3">
+                                            <p class="mb-0">
+                                                March 07, 2021 (fecha creación comentario)
+                                            </p>
+                                            <a href="/comment/delete" class="btn btn-danger">Eliminar</a>
+                                        </div>
+                                        <p class="mb-0">
+                                            message.content Lorem Ipsum is simply dummy text of the printing and typesetting
+                                            industry. Lorem Ipsum has been the industry's standard dummy text ever
+                                            since the 1500s, when an unknown printer took a galley of type and
+                                            scrambled it.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr class="my-0" />
+                        </div>
+    </section>
+{% include '_footer.html' %}
+
+
+{% endblock %}

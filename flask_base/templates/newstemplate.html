@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+{% block titulo %}Portal{% endblock %}
+{% block contenido %}
+
+{% include '_menu.html' %}
+
+<header id="header" class="header d-flex align-items-center">
+    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+
+        <a href="index.html" class="logo d-flex align-items-center">
+            <!-- Uncomment the line below if you also wish to use an image logo -->
+            <!-- <img src="static/img/logo.png" alt=""> -->
+            <img src="/static/img/apple-touch-icon.png" alt="Logo">
+            <h1>Portal - {{sistema}}</h1>
+        </a>
+
+        <nav id="navbar" class="navbar">
+            <ul>
+                <li><a href="/">Inicio</a></li>
+                <li class="dropdown"><a href="#"><span>Categorias</span> <i
+                            class="bi bi-chevron-down dropdown-indicator"></i></a>
+                    <ul>
+                        {% for category in all_categories %}
+                        <li><a href="/news/category/{{ category.id }}">{{ category.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
+
+                <li><a href="/about">Sobre</a></li>
+                <li><a href="/contact">Contacto</a></li>
+            </ul>
+            <ul>
+                <li class="dropdown"><a href="#"><span>Login/Registro</span> <i
+                            class="bi bi-chevron-down dropdown-indicator"></i></a>
+                    <ul>
+                        <li class="dropdown"><a href="/reader/register">Lector</a></li>
+                        <li class="dropdown"><a href="/journalist/register">Periodista</a></li>
+                        <li class="dropdown"><a href="/profile">Perfil </a></li>
+                    </ul>
+                </li>
+
+            </ul>
+        </nav><!-- .navbar -->
+
+        <div class="position-relative">
+            <a href="#" class="mx-2"><span class="bi-facebook"></span></a>
+            <a href="#" class="mx-2"><span class="bi-twitter"></span></a>
+            <a href="#" class="mx-2"><span class="bi-instagram"></span></a>
+
+            <a href="#" class="mx-2 js-search-open"><span class="bi-search"></span></a>
+            <i class="bi bi-list mobile-nav-toggle"></i>
+
+            <!-- ======= Search Form ======= -->
+            <div class="search-form-wrap js-search-form-wrap">
+                <form action="search-result.html" class="search-form">
+                    <span class="icon bi-search"></span>
+                    <input type="text" placeholder="Search" class="form-control">
+                    <button class="btn js-search-close"><span class="bi-x"></span></button>
+                </form>
+            </div><!-- End Search Form -->
+
+        </div>
+
+    </div>
+
+</header><!-- End Header -->
+
+<main class="mt-5">
+    <div class="container">
+        <div class="single-post">
+            <div class="post-meta"><span class="mx-1">&bullet;</span> <span>{{ news.created_at }}</span></div>
+            <h1 class="mb-5">{{ news.title }}</h1>
+            <p><i><strong>{{ news.resume }}</strong></i></p>
+            <hr>
+            <figure class="my-4">
+                <div class="mt-15 col-md-10 col-lg-4" style="margin-right: 50px;">
+                    <img src="/uploads/{{ news.image }}" width="500" class=" rounded float-start"
+                        alt="Imagen de noticia">
+                </div>
+            </figure>
+            <p>{{ news.content }}</p>
+        </div>
+    </div>
+    <div class="comments container w-75">
+        <h5 class="comment-title py-4"> 2 Comentarios (count)</h5>
+        <div class="comment d-flex mb-4">
+            <div class="flex-shrink-0">
+                <div class="avatar avatar-sm rounded-circle">
+                    <img class="avatar-img" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvDx0IVQPwxNVZ48ZyoMQ_IGFDBsaIhRdy6w&usqp=CAU" alt="" class="img-fluid">
+                </div>
+            </div>
+            <div class="flex-grow-1 ms-2 ms-sm-3">
+                <div class="comment-meta d-flex align-items-baseline">
+                    <h6 class="me-2">message.firts_name message.last_name</h6>
+                    <span class="text-muted">message.created_at</span>
+                </div>
+                <div class="comment-body">
+                    message.text
+                </div>
+                <div class="row justify-content-center mt-5">
+
+                    <div class="col-lg-12">
+                        <form action="/news/comment" method="post" class="row formstyle"></form>
+                        {% with messages = get_flashed_messages(category_filter=['comment']) %}
+                        {% if messages %}
+                            {% for message in messages %}
+                            <div class="alert alert-warning" role="alert">
+                                {{ message }}
+                            </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                        <h5 class="comment-title">Deja un Comentario</h5>
+                        <div class="row">
+                            <div class="col-12 mb-3">
+                                <label for="text">Comentario:</label>
+                                <textarea class="form-control" id="text" name="text" placeholder="Cuentanos que piensas de la noticia"
+                                    cols="30" rows="10"></textarea>
+                            </div>
+                            <div class="col-12">
+                                <input type="submit" class="btn btn-primary" value="Post comment">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+</main>
+
+{% include '_footer.html' %}
+
+
+{% endblock %}
